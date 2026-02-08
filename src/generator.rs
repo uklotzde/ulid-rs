@@ -186,14 +186,14 @@ mod tests {
 
     #[test]
     fn test_order_monotonic_with_source() {
-        use rand::rngs::mock::StepRng;
-        let mut source = StepRng::new(123, 0);
+        use rand::{rngs::SmallRng, SeedableRng as _};
+        let mock_source = || SmallRng::seed_from_u64(1);
         let mut gen = Generator::new();
 
         let _has_default = Generator::default();
 
-        let ulid1 = gen.generate_with_source(&mut source).unwrap();
-        let ulid2 = gen.generate_with_source(&mut source).unwrap();
+        let ulid1 = gen.generate_with_source(&mut mock_source()).unwrap();
+        let ulid2 = gen.generate_with_source(&mut mock_source()).unwrap();
         assert!(ulid1 < ulid2);
     }
 
