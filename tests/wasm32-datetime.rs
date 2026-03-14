@@ -25,13 +25,13 @@ fn test_dynamic() {
 
 #[wasm_bindgen_test]
 fn test_source() {
-    use rand::rngs::mock::StepRng;
-    let mut source = StepRng::new(123, 0);
+    use rand::{rngs::SmallRng, SeedableRng as _};
+    let mock_source = || SmallRng::seed_from_u64(123);
 
-    let u1 = Ulid::with_source(&mut source);
+    let u1 = Ulid::with_source(&mut mock_source());
     let dt = now() + Duration::from_millis(1);
-    let u2 = Ulid::from_datetime_with_source(dt, &mut source);
-    let u3 = Ulid::from_datetime_with_source(dt, &mut source);
+    let u2 = Ulid::from_datetime_with_source(dt, &mut mock_source());
+    let u3 = Ulid::from_datetime_with_source(dt, &mut mock_source());
 
     assert!(u1 < u2);
     assert_eq!(u2, u3);
