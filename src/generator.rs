@@ -76,9 +76,9 @@ impl Generator {
     /// use ulid::Generator;
     /// use ulid::Ulid;
     /// use std::time::SystemTime;
-    /// use rand::prelude::*;
+    /// use rand::{prelude::*, rngs::SysRng};
     ///
-    /// let mut rng = StdRng::from_os_rng();
+    /// let mut rng = StdRng::try_from_rng(&mut SysRng).unwrap();
     /// let mut gen = Generator::new();
     ///
     /// let ulid1 = gen.generate_with_source(&mut rng).unwrap();
@@ -101,10 +101,10 @@ impl Generator {
     /// ```rust
     /// use ulid::Generator;
     /// use std::time::SystemTime;
-    /// use rand::prelude::*;
+    /// use rand::{prelude::*, rngs::SysRng};
     ///
     /// let dt = SystemTime::now();
-    /// let mut rng = StdRng::from_os_rng();
+    /// let mut rng = StdRng::try_from_rng(&mut SysRng).unwrap();
     /// let mut gen = Generator::new();
     ///
     /// let ulid1 = gen.generate_from_datetime_with_source(dt, &mut rng).unwrap();

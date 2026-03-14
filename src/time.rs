@@ -20,10 +20,10 @@ impl Ulid {
     ///
     /// # Example
     /// ```rust
-    /// use rand::prelude::*;
+    /// use rand::{prelude::*, rngs::SysRng};
     /// use ulid::Ulid;
     ///
-    /// let mut rng = StdRng::from_os_rng();
+    /// let mut rng = StdRng::try_from_rng(&mut SysRng).unwrap();
     /// let ulid = Ulid::with_source(&mut rng);
     /// ```
     pub fn with_source<R: rand::Rng>(source: &mut R) -> Ulid {
@@ -56,10 +56,10 @@ impl Ulid {
     /// # Example
     /// ```rust
     /// use std::time::{SystemTime, Duration};
-    /// use rand::prelude::*;
+    /// use rand::{prelude::*, rngs::SysRng};
     /// use ulid::Ulid;
     ///
-    /// let mut rng = StdRng::from_os_rng();
+    /// let mut rng = StdRng::try_from_rng(&mut SysRng).unwrap();
     /// let ulid = Ulid::from_datetime_with_source(SystemTime::now(), &mut rng);
     /// ```
     pub fn from_datetime_with_source<R>(datetime: SystemTime, source: &mut R) -> Ulid
